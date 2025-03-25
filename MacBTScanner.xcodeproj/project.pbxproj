@@ -398,9 +398,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacBTScanner/Preview Content\"";
 				DEVELOPMENT_TEAM = Y9CLKT56P2;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app needs to use Bluetooth to scan and connect to the device.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "This app needs to use Bluetooth to scan and connect to the device.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -425,9 +427,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacBTScanner/Preview Content\"";
 				DEVELOPMENT_TEAM = Y9CLKT56P2;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app needs to use Bluetooth to scan and connect to the device.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "This app needs to use Bluetooth to scan and connect to the device.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
