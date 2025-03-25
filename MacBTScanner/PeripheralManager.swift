@@ -5,6 +5,7 @@
 //  Created by Hlwan Aung Phyo on 2025/03/25.
 //
 
+import CoreBluetooth
 
 class PeripheralManager: NSObject, CBPeripheralDelegate {
     static let shared = PeripheralManager()
