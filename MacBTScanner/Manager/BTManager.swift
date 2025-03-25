@@ -15,25 +15,6 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     // for the ui update
     var peripheralStateChanged: ((PeripheralState) -> Void)?
     
-    enum PeripheralState {
-        case scanning, disconnected, connecting, connected, error
-        
-        var color: Color {
-            switch self {
-            case .scanning:
-                    .gray
-            case .disconnected:
-                    .orange
-            case .connecting:
-                    .blue
-            case .connected:
-                    .green
-            case .error:
-                    .red
-            }
-        }
-    }
-    
     var centralManager: CBCentralManager!
     
     var esp32: CBPeripheral?

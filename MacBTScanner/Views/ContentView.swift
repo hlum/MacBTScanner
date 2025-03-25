@@ -12,7 +12,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Circle()
-//                .fill(vm.btManager.peripheralState.color)
+                .fill(vm.peripheralState.color)
                 .frame(maxHeight: 100)
             
             Button {

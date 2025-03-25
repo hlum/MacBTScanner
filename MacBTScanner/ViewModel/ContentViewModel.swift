@@ -9,7 +9,15 @@
 import CoreBluetooth
 
 final class ContentViewModel: ObservableObject {
-    let btManager = BluetoothManager.shared
+    private let btManager = BluetoothManager.shared
+    
+    @Published var peripheralState: PeripheralState = .scanning
+    
+    init() {
+        btManager.peripheralStateChanged = { [weak self] state in
+            self?.peripheralState = state
+        }
+    }
     
     func toggleLED() {
         guard let char = btManager.esp32Characteristic,
