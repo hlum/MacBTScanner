@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		94A654CB2D92CDEA00235E1C /* MacBTScannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A654C32D92CDEA00235E1C /* MacBTScannerApp.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		94A654842D90386500235E1C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		94A654722D90386400235E1C /* MacBTScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacBTScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94A654832D90386500235E1C /* MacBTScannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacBTScannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94A6548D2D90386500235E1C /* MacBTScannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacBTScannerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		94A654C32D92CDEA00235E1C /* MacBTScannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBTScannerApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		94A654692D90386400235E1C = {
 			isa = PBXGroup;
 			children = (
+				94A654C32D92CDEA00235E1C /* MacBTScannerApp.swift */,
 				94A654742D90386400235E1C /* MacBTScanner */,
 				94A654862D90386500235E1C /* MacBTScannerTests */,
 				94A654902D90386500235E1C /* MacBTScannerUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94A654CB2D92CDEA00235E1C /* MacBTScannerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
