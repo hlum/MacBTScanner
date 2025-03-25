@@ -12,6 +12,9 @@ import SwiftUI
 class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     static let shared = BluetoothManager()
     
+    // for the ui update
+    var peripheralStateChanged: ((PeripheralState) -> Void)?
+    
     enum PeripheralState {
         case scanning, disconnected, connecting, connected, error
         
@@ -36,9 +39,6 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     var esp32: CBPeripheral?
     var esp32Characteristic: CBCharacteristic?
     
-    
-    @Published var peripheralState: PeripheralState = .disconnected
-    
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -62,7 +62,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
         if esp32 == nil {
             esp32 = peripheral
         }
-        peripheralState = .connecting
+        peripheralStateChanged?(.connecting)
         connectTo(peripheral)
     }
     
@@ -70,19 +70,21 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     // 接続成功
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         Logger.standard.info("接続成功")
-        peripheralState = .connected
+        peripheralStateChanged?(.connected)
         peripheral.discoverServices([CBUUID(string: UUIDStrings.serviceUUIDString)])
     }
     
     
     //　接続失敗
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: (any Error)?) {
+        peripheralStateChanged?(.error)
         Logger.standard.error("接続失敗\(error)")
     }
     
     
     // 切断された
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: (any Error)?) {
+        peripheralStateChanged?(.disconnected)
         Logger.standard.info("切断")
     }
 }
@@ -93,7 +95,7 @@ extension BluetoothManager {
 
     private func startScan() {
         centralManager.scanForPeripherals(withServices: [CBUUID(string: UUIDStrings.serviceUUIDString)])
-        peripheralState = .scanning
+        peripheralStateChanged?(.scanning)
     }
     
     
