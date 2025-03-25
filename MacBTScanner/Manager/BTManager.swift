@@ -28,11 +28,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     
     // デバイスがオンになり,スキャンやり始める
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == .poweredOn {
-            startScan()
-        } else {
-            Logger.standard.error("Bluetooth デバイスがオフ")
-        }
+        checkAndStartScan()
     }
     
     
@@ -74,7 +70,11 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 // Helper funcs
 extension BluetoothManager {
 
-    private func startScan() {
+    func checkAndStartScan() {
+        guard centralManager.state == .poweredOn else {
+            Logger.standard.warning("デバイスはオフ")
+            return
+        }
         centralManager.scanForPeripherals(withServices: [CBUUID(string: UUIDStrings.serviceUUIDString)])
         peripheralStateChanged?(.scanning)
     }
