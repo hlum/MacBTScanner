@@ -13,11 +13,13 @@ final class ContentViewModel: ObservableObject {
     
     @Published var peripheralState: PeripheralState = .scanning
     
+    
     init() {
         btManager.peripheralStateChanged = { [weak self] state in
             self?.peripheralState = state
         }
     }
+    
     
     func toggleLED() {
         guard let char = btManager.esp32Characteristic,
@@ -28,4 +30,11 @@ final class ContentViewModel: ObservableObject {
         }
         btManager.esp32?.writeValue(data, for: char, type: .withResponse)
     }
+    
+    
+    func scanForPeripherals() {
+        btManager.checkAndStartScan()
+    }
+    
+    
 }

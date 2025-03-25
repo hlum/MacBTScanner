@@ -16,6 +16,12 @@ struct ContentView: View {
                 .frame(maxHeight: 100)
             
             Button {
+                vm.scanForPeripherals()
+            } label: {
+                Text("Reset and scan again")
+            }
+
+            Button {
                 vm.toggleLED()
             } label: {
                 VStack {
