@@ -12,32 +12,13 @@ import SwiftUI
 class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     static let shared = BluetoothManager()
     
-    enum PeripheralState {
-        case scanning, disconnected, connecting, connected, error
-        
-        var color: Color {
-            switch self {
-            case .scanning:
-                    .gray
-            case .disconnected:
-                    .orange
-            case .connecting:
-                    .blue
-            case .connected:
-                    .green
-            case .error:
-                    .red
-            }
-        }
-    }
+    // for the ui update
+    var peripheralStateChanged: ((PeripheralState) -> Void)?
     
     var centralManager: CBCentralManager!
     
     var esp32: CBPeripheral?
     var esp32Characteristic: CBCharacteristic?
-    
-    
-    @Published var peripheralState: PeripheralState = .disconnected
     
     override init() {
         super.init()
@@ -47,11 +28,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     
     // デバイスがオンになり,スキャンやり始める
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == .poweredOn {
-            startScan()
-        } else {
-            Logger.standard.error("Bluetooth デバイスがオフ")
-        }
+        checkAndStartScan()
     }
     
     
@@ -62,7 +39,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
         if esp32 == nil {
             esp32 = peripheral
         }
-        peripheralState = .connecting
+        peripheralStateChanged?(.connecting)
         connectTo(peripheral)
     }
     
@@ -70,19 +47,21 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     // 接続成功
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         Logger.standard.info("接続成功")
-        peripheralState = .connected
+        peripheralStateChanged?(.connected)
         peripheral.discoverServices([CBUUID(string: UUIDStrings.serviceUUIDString)])
     }
     
     
     //　接続失敗
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: (any Error)?) {
+        peripheralStateChanged?(.error)
         Logger.standard.error("接続失敗\(error)")
     }
     
     
     // 切断された
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: (any Error)?) {
+        peripheralStateChanged?(.disconnected)
         Logger.standard.info("切断")
     }
 }
@@ -91,9 +70,13 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 // Helper funcs
 extension BluetoothManager {
 
-    private func startScan() {
+    func checkAndStartScan() {
+        guard centralManager.state == .poweredOn else {
+            Logger.standard.warning("デバイスはオフ")
+            return
+        }
         centralManager.scanForPeripherals(withServices: [CBUUID(string: UUIDStrings.serviceUUIDString)])
-        peripheralState = .scanning
+        peripheralStateChanged?(.scanning)
     }
     
     
